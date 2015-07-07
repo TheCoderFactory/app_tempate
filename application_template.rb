@@ -14,14 +14,15 @@ gem 'sitemap_generator'
 gem 'whenever', :require => false
 gem 'sucker_punch', '~> 1.0'
 gem 'newrelic_rpm'
-gem 'pg'
 gem_group :development do
   gem "better_errors"
   gem 'quiet_assets'
+  gem 'sqlite3'
 end
 gem_group :production do
   gem 'rails_12factor'
   gem "passenger"
+  gem 'pg'
 end
 run "bundle install --without production"
 
@@ -37,25 +38,25 @@ end
 
 # create database.yml
 
-remove_file "config/database.yml"
-create_file 'config/database.yml' do <<-TEXT
-development:
-  adapter: postgresql
-  encoding: unicode
-  database: myapp_development
-  pool: 5
-  username: 
-  password: 
+# remove_file "config/database.yml"
+# create_file 'config/database.yml' do <<-TEXT
+# development:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: myapp_development
+#   pool: 5
+#   username: 
+#   password: 
 
-test:
-  adapter: postgresql
-  encoding: unicode
-  database: myapp_test
-  pool: 5
-  username: 
-  password: 
-TEXT
-end
+# test:
+#   adapter: postgresql
+#   encoding: unicode
+#   database: myapp_test
+#   pool: 5
+#   username: 
+#   password: 
+# TEXT
+# end
 
 
 # add bootstrap
@@ -191,7 +192,7 @@ create_file "lib/templates/erb/scaffold/index.html.erb" do <<-TEXT
 <table class="table">
     <tr>
   <% attributes.each do |attribute| -%>
-    <th><%%= '<%= attribute.name.capitalized %>' %></th>
+    <th><%= attribute.name.capitalize %></th>
   <% end -%>
       <th colspan="3"></th>
     </tr>
